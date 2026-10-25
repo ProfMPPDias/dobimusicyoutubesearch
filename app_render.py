@@ -351,7 +351,7 @@ async def handle_mcp_stop() -> None:
 def ensure_mcp_config() -> None:
     """Garante que mcp_config.json exista e utilize o executável Python atual (Linux ou Windows)."""
     config_path = Path("mcp_config.json")
-    sources = os.environ.get("MUSIC_SOURCES", "youtube,kuwo,netease")
+    sources = os.environ.get("MUSIC_SOURCES", "youtube")
     config = {
         "mcpServers": {
             "xiaozhi-music": {

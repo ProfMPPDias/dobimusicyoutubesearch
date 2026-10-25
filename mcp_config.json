@@ -3,14 +3,9 @@
     "xiaozhi-music": {
       "type": "stdio",
       "command": "python",
-      "args": [
-        "-m",
-        "music_mcp"
-      ],
+      "args": ["-m", "music_mcp"],
       "env": {
-        "MUSIC_SOURCES": "youtube,kuwo,netease",
-        "LOCAL_PLAYER": "none",
-        "AUTO_PLAY_LOCAL": "false",
+        "MUSIC_SOURCES": "youtube",
         "LOG_LEVEL": "INFO"
       }
     }

@@ -1,0 +1,16 @@
+.venv/
+.uv-cache/
+__pycache__/
+.pytest_cache/
+*.pyc
+cache/
+.env
+logs/
+*.log
+dist/
+build/
+*.egg-info/
+.idea/
+.vscode/
+work/
+outputs/
