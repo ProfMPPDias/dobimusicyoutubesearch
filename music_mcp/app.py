@@ -38,7 +38,7 @@ def _song_public(song: Song) -> dict:
 
 async def _verify_url(url: str) -> bool:
     """快速验证播放地址可用（Range 0-1）。"""
-    if "127.0.0.1" in url or "192.168." in url or "localhost" in url:
+    if "127.0.0.1" in url or "192.168." in url or "localhost" in url or "googlevideo.com" in url or "youtube" in url:
         return True
     try:
         ok = await proxy.verify_url(url)

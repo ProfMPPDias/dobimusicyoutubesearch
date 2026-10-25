@@ -27,6 +27,7 @@ class YouTubeSource(MusicSource):
             "no_warnings": True,
             "extract_flat": "in_playlist",
             "skip_download": True,
+            "extractor_args": {"youtube": {"player_client": ["android", "web"]}},
         }
         self._ydl_opts_resolve = {
             "format": "bestaudio[ext=m4a]/bestaudio/best",
@@ -34,6 +35,7 @@ class YouTubeSource(MusicSource):
             "quiet": True,
             "no_warnings": True,
             "skip_download": True,
+            "extractor_args": {"youtube": {"player_client": ["android", "web"]}},
         }
 
     async def search(self, query: str, limit: int = 10) -> List[Song]:
