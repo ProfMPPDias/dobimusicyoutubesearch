@@ -173,8 +173,6 @@ async def _play_song(args: dict) -> dict:
                             "artist": song.artist,
                             "cover": song.cover_url,
                             "url": play.url,
-                            "video_id": song.song_id,
-                            "source": song.source,
                         },
                     )
             except Exception:

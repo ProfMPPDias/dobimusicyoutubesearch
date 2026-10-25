@@ -1,4 +1,4 @@
-"""YouTube 音源适配器（Direto para Web Player sem bloqueios de datacenter）。"""
+"""YouTube 音源适配器（基于 yt-dlp）。"""
 
 from __future__ import annotations
 
@@ -21,16 +21,22 @@ class YouTubeSource(MusicSource):
 
     def __init__(self) -> None:
         self._ydl_opts_search = {
-            "format": "bestaudio/best",
+            "format": "bestaudio[ext=m4a]/bestaudio/best",
             "noplaylist": True,
             "quiet": True,
             "no_warnings": True,
             "extract_flat": "in_playlist",
             "skip_download": True,
-            "extractor_args": {"youtube": {"player_client": ["android", "web"]}},
+        }
+        self._ydl_opts_resolve = {
+            "format": "bestaudio[ext=m4a]/bestaudio/best",
+            "noplaylist": True,
+            "quiet": True,
+            "no_warnings": True,
+            "skip_download": True,
         }
 
-    async def search(self, query: str, limit: int = 5) -> List[Song]:
+    async def search(self, query: str, limit: int = 10) -> List[Song]:
         loop = asyncio.get_running_loop()
 
         def _search():
@@ -56,8 +62,6 @@ class YouTubeSource(MusicSource):
             thumbnails = entry.get("thumbnails")
             if thumbnails and isinstance(thumbnails, list) and len(thumbnails) > 0:
                 thumbnail = thumbnails[-1].get("url", "")
-            if not thumbnail:
-                thumbnail = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg"
 
             songs.append(
                 Song(
@@ -74,11 +78,24 @@ class YouTubeSource(MusicSource):
         return songs
 
     async def get_play_url(self, song: Song) -> PlayResult:
-        # Retorna o link direto do YouTube imediatamente (0.001s).
-        # Evita bloqueios de IP de datacenter no Render e timeout no robô.
+        loop = asyncio.get_running_loop()
         video_url = f"https://www.youtube.com/watch?v={song.song_id}"
+
+        def _resolve():
+            with yt_dlp.YoutubeDL(self._ydl_opts_resolve) as ydl:
+                return ydl.extract_info(video_url, download=False)
+
+        try:
+            info = await loop.run_in_executor(None, _resolve)
+        except Exception as exc:
+            raise SourceError(f"YouTube 解析播放地址失败: {exc}") from exc
+
+        raw_url = str((info or {}).get("url") or "")
+        if not raw_url:
+            raise SourceError("YouTube 未能提取到播放地址")
+
         return PlayResult(
-            url=video_url,
+            url=raw_url,
             mime_type="audio/mpeg",
             note=f"YouTube: {song.title}",
         )
