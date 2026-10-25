@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xiaozhi-music-mcp"
+version = "0.1.0"
+description = "小智AI 免费音乐 MCP 服务器：多音源搜索与流式播放"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+    { name = "XiaoZhi Music MCP contributors" },
+]
+keywords = ["mcp", "xiaozhi", "music", "小智AI", "免费音乐", "esp32"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Sound/Audio",
+]
+dependencies = [
+    "httpx>=0.27",
+    "python-dotenv>=1.0",
+    "websockets>=11.0.3",
+]
+
+[project.scripts]
+xiaozhi-music-mcp = "music_mcp.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/ABUGG-007/xiaozhi-mcp-music"
+Repository = "https://github.com/ABUGG-007/xiaozhi-mcp-music"
+Issues = "https://github.com/ABUGG-007/xiaozhi-mcp-music/issues"
+
+[tool.setuptools]
+packages = ["music_mcp", "music_mcp.sources"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+testpaths = ["tests"]

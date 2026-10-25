@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "xiaozhi-music": {
+      "type": "stdio",
+      "command": ".venv\\Scripts\\python.exe",
+      "args": ["-m", "music_mcp"],
+      "env": {
+        "MUSIC_SOURCES": "kuwo,netease,migu,kugou",
+        "LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}

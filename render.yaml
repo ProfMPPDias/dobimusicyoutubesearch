@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: dobi-music-player
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app_render.py
+    envVars:
+      - key: MCP_ENDPOINT
+        sync: false
+      - key: MUSIC_SOURCES
+        value: youtube
+      - key: LOG_LEVEL
+        value: INFO

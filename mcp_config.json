@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "xiaozhi-music": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["-m", "music_mcp"],
+      "env": {
+        "MUSIC_SOURCES": "youtube",
+        "LOCAL_PLAYER": "ffplay",
+        "AUTO_PLAY_LOCAL": "true",
+        "LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}
